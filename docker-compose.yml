@@ -1,0 +1,99 @@
+services:
+  # Telegram 天气机器人
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tg-weather-bot
+    command: ["python", "main.py"]
+
+    # 使用宿主机网络（解决网络连接问题）
+    network_mode: "host"
+
+    # 从 .env 文件加载环境变量
+    env_file:
+      - .env
+
+    # 配置代理（使用宿主机代理）
+    # 由于使用 host 网络，容器可以直接访问 localhost
+    environment:
+      - HTTP_PROXY=http://localhost:7890
+      - HTTPS_PROXY=http://localhost:7890
+      - NO_PROXY=localhost,127.0.0.1
+
+    # 自动重启策略
+    restart: unless-stopped
+
+    # 日志配置 - 限制日志文件大小
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # 资源限制（可选，根据服务器配置调整）
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "python main.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # 价差监控服务
+  price-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tg-price-monitor
+    command: ["python", "price_monitor.py"]
+
+    # 使用宿主机网络（WebSocket 连接）
+    network_mode: "host"
+
+    # 从 .env 文件加载环境变量
+    env_file:
+      - .env
+
+    # 配置代理
+    environment:
+      - HTTP_PROXY=http://localhost:7890
+      - HTTPS_PROXY=http://localhost:7890
+      - NO_PROXY=localhost,127.0.0.1
+
+    # 自动重启策略
+    restart: unless-stopped
+
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "python price_monitor.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

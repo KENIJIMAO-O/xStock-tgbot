@@ -1,0 +1,59 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 环境变量文件（注意：.env 不应该被忽略，因为需要在构建时使用）
+# 如果使用 docker-compose 的 env_file，则 .env 会在运行时加载
+# .env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 测试
+.pytest_cache
+.coverage
+htmlcov/
+
+# 文档
+README.md
+DEPLOY.md
+*.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 测试脚本和独立脚本
+test_*.py
+check_*.py
+spot.py
+spot_ws.py
+spot_ws_once.py
+future_ws.py
+future_ws_once.py
