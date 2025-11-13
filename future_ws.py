@@ -12,7 +12,7 @@ subscribe_msg = {
     "time": int(time.time()),
     "channel": "futures.tickers",
     "event": "subscribe",
-    "payload": ["TSLAX_USDT"]  # 永续合约币对
+    "payload": ["AAPLX_USDT"]  # 永续合约币对
 }
 
 ws.send(json.dumps(subscribe_msg))

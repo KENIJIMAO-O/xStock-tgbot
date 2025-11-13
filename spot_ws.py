@@ -11,7 +11,7 @@ ws.send(json.dumps({
     "time": int(time.time()),
     "channel": "spot.tickers",
     "event": "subscribe",
-    "payload": ["TSLAX_USDT"]
+    "payload": ["AMZNX_USDT"]
 }))
 
 print("等待价格数据...\n")
