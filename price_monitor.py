@@ -8,6 +8,7 @@ import json
 import threading
 import os
 from datetime import datetime
+import pytz
 from websocket import create_connection
 from dotenv import load_dotenv
 import requests
@@ -242,6 +243,10 @@ def price_monitor():
 
                     premium_line = f"<b>溢价率:</b> {price_diff_pct:.2f}%\n" if not USE_PERCENTAGE else ""
 
+                    # 获取上海时区的当前时间
+                    shanghai_tz = pytz.timezone('Asia/Shanghai')
+                    now_shanghai = datetime.now(shanghai_tz)
+
                     message = f"""🚨 <b>价差告警</b>
 
 <b>币对:</b> {symbol}
@@ -260,7 +265,7 @@ def price_monitor():
 • 资金费率: {symbol_future_data.get('funding_rate', 'N/A')}
 • 24h涨跌: {symbol_future_data.get('change_24h', 'N/A')}%
 
-⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
+⏰ {now_shanghai.strftime('%Y-%m-%d %H:%M:%S')} (上海时间)"""
 
                     print(f"\n{'='*50}")
                     print(f"🚨 {symbol} 触发告警！价差: {diff_display}")
