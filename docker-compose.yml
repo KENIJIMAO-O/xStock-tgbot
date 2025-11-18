@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: tg-weather-bot
-    command: ["python", "main.py"]
+    command: ["python", "-m", "bot.main"]
 
     # 使用宿主机网络（解决网络连接问题）
     network_mode: "host"
@@ -43,7 +43,7 @@ services:
 
     # 健康检查
     healthcheck:
-      test: ["CMD", "pgrep", "-f", "python main.py"]
+      test: ["CMD", "pgrep", "-f", "bot.main"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -55,7 +55,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: tg-price-monitor
-    command: ["python", "price_monitor.py"]
+    command: ["python", "-m", "monitors.price_monitor"]
 
     # 使用宿主机网络（WebSocket 连接）
     network_mode: "host"
@@ -92,7 +92,7 @@ services:
 
     # 健康检查
     healthcheck:
-      test: ["CMD", "pgrep", "-f", "python price_monitor.py"]
+      test: ["CMD", "pgrep", "-f", "monitors.price_monitor"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -6,7 +6,7 @@
 import os
 import logging
 from telegram.ext import ContextTypes
-from services import get_guangzhou_weather
+from .services import get_guangzhou_weather
 
 logger = logging.getLogger(__name__)
 

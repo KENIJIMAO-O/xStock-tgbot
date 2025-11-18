@@ -22,11 +22,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制项目文件
-COPY main.py .
-COPY handlers.py .
-COPY services.py .
-COPY jobs.py .
-COPY price_monitor.py .
+COPY bot/ ./bot/
+COPY monitors/ ./monitors/
 
 # 创建非 root 用户运行应用（安全最佳实践）
 RUN useradd -m -u 1000 botuser && \
@@ -36,4 +33,4 @@ RUN useradd -m -u 1000 botuser && \
 USER botuser
 
 # 默认启动命令（可在 docker-compose 中覆盖）
-CMD ["python", "main.py"]
+CMD ["python", "-m", "bot.main"]

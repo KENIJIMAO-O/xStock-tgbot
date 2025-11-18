@@ -11,8 +11,8 @@ from dotenv import load_dotenv
 from telegram.ext import Application, CommandHandler
 
 # 导入自定义模块
-from handlers import start_command, help_command, weather_command
-from jobs import send_morning_greeting
+from .handlers import start_command, help_command, weather_command
+from .jobs import send_morning_greeting
 
 # 配置日志
 logging.basicConfig(
